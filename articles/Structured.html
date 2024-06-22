@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Engineering</title>
+</head>
+<body style="background-color: rgba(210, 210, 170, 0.800);"></body>
+    <h1> (Varsa) Yapılandırılmış Çıktı İsteyin </h1>
+    <article>
+        <p>Dil modelleri için promptlar tasarlarken, JSON, XML, HTML veya benzeri formatlar gibi yapılandırılmış çıktı formatları istemek genellikle faydalıdır. Yapılandırılmış çıktı talep ederek, modelden belirli ve iyi organize edilmiş yanıtlar alabilirsiniz; bu, özellikle veri işleme, web scraping veya içerik oluşturma gibi görevler için oldukça kullanışlıdır.</p>
+        
+        <p>Yapılandırılmış çıktı talep etmek için şu adımları izleyebilirsiniz:</p>
+        
+        <ul>
+            <li><strong>Çıktı formatını belirtin:</strong> Modelin üretmesini istediğiniz çıktı formatını açıkça belirtin. Örneğin, modelden bir JSON nesnesi, bir HTML sayfası veya bir XML belgesi oluşturmasını isteyebilirsiniz.</li>
+            <li><strong>Yapıyı ve alanları tanımlayın:</strong> İstenen çıktının yapısını belirleyin ve gerekli alanları belirtin. Bu, modelin istenen yapıya uygun yanıtlar üretmesine yardımcı olur. Beklenen formatı göstermek için örnekler veya şablonlar sağlayabilirsiniz.</li>
+            <li><strong>Girdi bağlamı sağlayın:</strong> Modele yapılandırılmış çıktıyı oluşturabilmesi için ilgili bilgi veya veriyi prompt içinde dahil edin. Bu bağlam, modelin görevi anlamasına veya daha doğru sonuçlar üretmesine yardımcı olabilir.</li>
+        </ul>
+
+        <p><strong>İşte yapılandırılmış veri kullanımıyla ilgili bir örnek:</strong></p>
+
+        <strong><code>Bana &lt;review&gt; etiketi içindeki metinden `product` (ürünün adı), `isPositive` (boolean), `summary` (incelemenin tek cümlelik özeti) anahtarlarına sahip bir JSON nesnesi oluşturmamda yardım et. <br><br>
+
+&lt;review&gt;Regrettably, the "XYZ ProTech 2000" product failed to meet even the most basic expectations. From its lackluster build quality and confusing user interface to its abysmal performance and disappointing customer support, this product left me deeply dissatisfied. If you're considering purchasing the "XYZ ProTech 2000," I strongly advise you to explore alternative options that offer superior quality and reliability.
+&lt;/review&gt;</code></pre>
+
+        <p>Yukarıdaki prompttan çıkan çıktı:</p>
+
+        <pre><code class="language-json">{
+  "product": "XYZ ProTech 2000",
+  "isPositive": false,
+  "summary": "Failed to meet expectations due to lackluster build quality, confusing user interface, abysmal performance, and disappointing customer support."
+}</code></pre>
+    </article>
+
+    <a href="index.html">Back to Articles</a>
+</body>
+</body>
+</html>
