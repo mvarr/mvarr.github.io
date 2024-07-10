@@ -1,0 +1,90 @@
+body {
+    background-color: #202a3a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-image: url('noise.jpg'); 
+    background-blend-mode: overlay;
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    opacity: 0.9;
+}
+
+.container {
+    position: relative;
+    width: 0px;
+    height: 0px;
+    scale: 1.5;
+}
+
+#main-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #1d6a9b;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 10px;
+    z-index: 10;
+    white-space: nowrap;
+    text-align: center;
+    width: auto;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+#main-button:hover {
+    background-color: #1f8ad1;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+#sub-buttons {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.sub-button {
+    position: absolute;
+    background-color: #99372e;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    transform: translate(-50%, -50%);
+    z-index: 2; 
+    white-space: nowrap;
+    text-align: center;
+    width: auto;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.sub-button:hover {
+    background-color: #da3826;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.line {
+    position: absolute;
+    background-color: #d6d6d6;
+    height: 2px;
+    top: 50%;
+    left: 50%;
+    transform-origin: left center;
+    z-index: 1;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
