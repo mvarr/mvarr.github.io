@@ -3,42 +3,610 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Melih Var</title>
-    <body style="background-color: #071d38	;"></body>
+    <title>~/home/mvarr - personal blog</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, sans-serif;
-            line-height: 1.6;
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+        
+        * {
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #00ff00;
             background-color: #000000;
-        }
-        .container {
-            max-width: 800px;
-            margin: auto;
-            background: #000000;
             padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px #1554a15d;
+            max-width: 900px;
+            margin: 0 auto;
         }
-        h1, h2, p, ul, li {
-            color: #adadad;
+
+        .terminal-header {
+            border: 1px solid #333;
+            background: #111;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        .terminal-title {
+            color: #00ff00;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .terminal-path {
+            color: #666;
+            font-size: 12px;
+        }
+
+        .ascii-art {
+            color: #00ff00;
+            white-space: pre;
+            font-size: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        h1, h2, h3 {
+            color: #00ff00;
+            font-weight: bold;
+            margin: 20px 0 10px 0;
+        }
+
+        h1::before { content: "# "; }
+        h2::before { content: "## "; }
+        h3::before { content: "### "; }
+
+        a {
+            color: #0099ff;
+            text-decoration: underline;
+        }
+
+        a:hover {
+            color: #00ff00;
+            background-color: #003300;
+        }
+
+        a:visited {
+            color: #9900ff;
+        }
+
+        .section {
+            margin: 30px 0;
+            padding: 15px;
+            border-left: 3px solid #333;
+            background-color: #0a0a0a;
+        }
+
+        .blog-post {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px dashed #333;
+            background: #050505;
+        }
+
+        .blog-post h3 {
+            color: #ffff00;
+            margin-bottom: 10px;
+        }
+
+        .blog-meta {
+            color: #666;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+        .blog-meta::before {
+            content: "[";
+        }
+
+        .blog-meta::after {
+            content: "]";
+        }
+
+        .tags {
+            margin-top: 10px;
+        }
+
+        .tag {
+            color: #ff6600;
+            margin-right: 10px;
+        }
+
+        .tag::before {
+            content: "#";
+        }
+
+        .progress-bar {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+            font-size: 12px;
+        }
+
+        .progress-label {
+            width: 120px;
+            color: #00ff00;
+        }
+
+        .progress-visual {
+            width: 200px;
+            color: #333;
+        }
+
+        .progress-filled {
+            color: #00ff00;
+        }
+
+        .contact-form {
+            border: 1px solid #333;
+            padding: 20px;
+            margin: 20px 0;
+            background: #0a0a0a;
+        }
+
+        .form-group {
+            margin: 10px 0;
+        }
+
+        .form-group label {
+            display: block;
+            color: #00ff00;
+            margin-bottom: 5px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            background: #000;
+            border: 1px solid #333;
+            color: #00ff00;
+            padding: 8px;
+            font-family: inherit;
+            font-size: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #00ff00;
+            background: #001100;
+        }
+
+        .submit-btn {
+            background: #000;
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            padding: 8px 20px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: inherit;
+        }
+
+        .submit-btn:hover {
+            background: #003300;
+        }
+
+        .ascii-separator {
+            color: #333;
+            text-align: center;
+            margin: 20px 0;
+            font-size: 10px;
+        }
+
+        .footer {
+            border-top: 1px solid #333;
+            padding-top: 20px;
+            margin-top: 40px;
+            text-align: center;
+            color: #666;
+            font-size: 12px;
+        }
+
+        .gist-embed {
+            border: 1px solid #333;
+            background: #050505;
+            padding: 10px;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+
+        .gist-content {
+            color: #00ff00;
+            white-space: pre-wrap;
+            font-size: 12px;
+        }
+
+        .gist-link {
+            color: #0099ff;
+            font-size: 11px;
+            text-decoration: none;
+            border-bottom: 1px dotted #0099ff;
+        }
+
+        .loading {
+            color: #ffff00;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        .command {
+            color: #0099ff;
+        }
+
+        .output {
+            color: #00ff00;
+            margin-left: 20px;
+        }
+
+        .error {
+            color: #ff0000;
+        }
+
+        .warning {
+            color: #ffff00;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        li::before {
+            content: "* ";
+            color: #666;
+        }
+
+        blockquote {
+            border-left: 3px solid #333;
+            padding-left: 15px;
+            margin: 10px 0;
+            color: #666;
+            font-style: italic;
+        }
+
+        blockquote::before {
+            content: "> ";
+        }
+
+        .status-line {
+            background: #222;
+            color: #00ff00;
+            padding: 5px 10px;
+            font-size: 12px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            border-top: 1px solid #333;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+                font-size: 12px;
+            }
+            
+            .progress-visual {
+                width: 150px;
+            }
+            
+            .progress-label {
+                width: 100px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Hello World!</h1>
-        <p>Github WebPage ve html komutlarını denemek, aynı zamanda bazı notlarımı saklamak için bu sayfayı kullanmaktayım. Bu sitede yapılacak pek de fazla şey yok, henüz!</p>
-        <h2>Linkler</h2>
-        <p>Bu siteye uğramalarını söylediğim insanların aradığı linkler (muhtemelen) aşağıda mevcut:</p>
+    <div class="terminal-header">
+        <div class="terminal-title">mvarr@localhost:~$</div>
+        <div class="terminal-path">/home/mvarr/mvarr.github.io/index.html</div>
+    </div>
+
+    <div class="ascii-art">
+ _          _ _          __      _                _ _ 
+| |__   ___| | | ___    / _|_ __/ | ___ _ __   __| | |
+| '_ \ / _ \ | |/ _ \  | |_| '__| |/ _ \ '_ \ / _` | |
+| | | |  __/ | | (_) | |  _| |  | |  __/ | | | (_| |_|
+|_| |_|\___|_|_|\___/  |_| |_|  |_|\___|_| |_|\__,_(_)
+    </div>
+
+    <div class="section">
+        <h1>whoami</h1>
+        <p>Ben melih, karadeniz teknik universitesi bilgisayar muhendisliginde 3. siniftayim.</p>
+        <p>ozgur yazilim, unix felsefesi ve minimal teknolojilere ilgi duyan biriyim.</p>
+        <p>bu sayfada elimden geldigince ogrenim surecimde edindigim bilgileri paylasiyorum.</p>
+        <p><span class="warning">not:</span> buradaki bilgiler tamamen sahsi deneyimlerime dayanir. bilgi degil terube odakli.</p>
+    </div>
+
+    <div class="ascii-separator">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    </div>
+
+    <div class="section">
+        <h2>recent_posts.log</h2>
+        <p class="command">$ curl -s "https://api.github.com/users/mvarr/gists" | jq '.[] | select(.description | contains("[BLOG]"))'</p>        
+        <div id="gist-posts">
+            <div class="output">Loading recent posts...</div>
+        </div>
+
+        <!-- fallback static posts for placeholder. -->
+        <div id="static-posts" style="display: none;">
+            <div class="blog-post">
+                <h3>blog title #1</h3>
+                <div class="blog-meta">2025-07-25 13:42:15 +0300 | 8min read</div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt 
+                    ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco 
+                    laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in 
+                    voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat 
+                    non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                <div class="tags">
+                    <span class="tag">tag #1</span>
+                    <span class="tag">tag #2</span>
+                    <span class="tag">tag #3</span>
+                </div>
+            </div>
+
+            <div class="blog-post">
+                <h3>blog title #2</h3>
+                <div class="blog-meta">2025-07-20 21:24:53 +0300 | 5min read</div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt 
+                    ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco 
+                    laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in 
+                    voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat 
+                    non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                <div class="tags">
+                    <span class="tag">tag #1</span>
+                    <span class="tag">tag #2</span>
+                    <span class="tag">tag #3</span>
+                </div>
+            </div>
+
+           <div class="blog-post">
+                <h3>blog title #3</h3>
+                <div class="blog-meta">2025-07-12 06:53:32 +0300 | 1min read</div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt 
+                    ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco 
+                    laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in 
+                    voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat 
+                    non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                <div class="tags">
+                    <span class="tag">tag #1</span>
+                    <span class="tag">tag #2</span>
+                    <span class="tag">tag #3</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ascii-separator">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    </div>
+
+    <div class="section">
+        <h2>skills.conf</h2>
+        
+        <div class="progress-bar">
+            <span class="progress-label">zsh/shell:</span>
+            <span class="progress-visual">█████░░░░░ <span class="progress-filled">50%</span></span>
+        </div>
+        
+        <div class="progress-bar">
+            <span class="progress-label">python:</span>
+            <span class="progress-visual">██████░░░░ <span class="progress-filled">60%</span></span>
+        </div>
+        
+        <div class="progress-bar">
+            <span class="progress-label">bash scripting:</span>
+            <span class="progress-visual">████░░░░░░ <span class="progress-filled">40%</span></span>
+        </div>
+        
+        <div class="progress-bar">
+            <span class="progress-label">vim:</span>
+            <span class="progress-visual">████████░░ <span class="progress-filled">80%</span></span>
+        </div>
+        
+        <div class="progress-bar">
+            <span class="progress-label">git:</span>
+            <span class="progress-visual">████████░░ <span class="progress-filled">80%</span></span>
+        </div>
+        
+        <div class="progress-bar">
+            <span class="progress-label">containers:</span>
+            <span class="progress-visual">████░░░░░░ <span class="progress-filled">40%</span></span>
+        </div>
+
+        <div class="progress-bar">
+            <span class="progress-label">virtualization:</span>
+            <span class="progress-visual">█████░░░░░ <span class="progress-filled">50%</span></span>
+        </div>
+        
+        <div class="progress-bar">
+            <span class="progress-label">networking:</span>
+            <span class="progress-visual">██████░░░░ <span class="progress-filled">60%</span></span>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>learning_path.roadmap</h2>
+        <p class="command">$ cat current_focus.txt</p>
+        <div class="output">
+        [DONE] + Linux basics & command line mastery<br>
+        [DONE] + Text editors (vim > emacs > nano)<br>
+        [DONE] + Network protocols deep dive<br>
+        [PROG] . System administration & server management<br>
+        [PROG] . Security hardening & penetration testing<br>
+        [PROG] . Containerization technologies<br>
+        [TODO] - Infrastructure as Code<br>
+        </div>
+        
+        <p class="command">$ grep -i "philosophy" ~/.vimrc</p>
+        <div class="output">
+        " Do one thing and do it well<br>
+        " Worse is better<br>
+        " being kind is free
+        </div>
+    </div>
+
+    <div class="ascii-separator">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    </div>
+
+    <div class="section">
+        <h2>links.txt</h2>
         <ul>
-            <li>Prompt Engineering  Roadmap'ine sığdıramadığım metinler: <a href="./articles/index.html">Articles</a></li>
-            <li>KTUCEC Web Komitesi Ana Şablonu: <a href="./cecweb/index.html">KTUCECweb</a></li>
+            <li><a href="https://github.com/mvarr[username]" target="_blank">github.com/mvarr</a> - kod deposu</li>
+            <li><a href="mailto:melihvar@hotmail.com">melihvar@hotmail.com</a> - elektronik posta</li>
+            <li><a href="http://linkedin.com/in/melihvar" target="_blank">/in/melihvar</a> - ise alinmak için ek prosedur</li>
+            <li><a href="https://matrix.to/#/@mvarr:matrix.org" target="_blank">@mvarr:matrix.org</a> - matrix chat</li>
         </ul>
-        <h2>İletişim</h2>
-        <p>Benimle iletişime geçmek için: <a href="mailto:melihvar@gotmail.com">melihvar@hotmail.com</a><br>
-        Linkedin Hesabım: <a href="https://www.linkedin.com/in/melihvar/">Melih Var</a><br>
-        Github: <a href="https://github.com/mvarr">mvarr</a></p><br>
-        <a href="https://roadmap.sh"><img src="https://roadmap.sh/card/wide/65a1651cb968487fbfbd1418?variant=dark&roadmaps=devops%2Ccyber-security%2Cgolang%2Cdocker" alt="roadmap.sh"/></a></body>
+        
+        <h3>worthy_links.bookmarks</h3>
+        <ul>
+            <li><a href="https://suckless.org" target="_blank">suckless.org</a> - software that sucks less</li>
+            <li><a href="https://cat-v.org" target="_blank">cat-v.org</a> - considered harmful</li>
+            <li><a href="https://www.linux.org.tr/" target="_blank">linux.org.tr</a> - linux tr subesi</li>
+            <li><a href="https://www.kernel.org" target="_blank">kernel.org</a> - sahih cekirdek</li>
+            <li><a href="https://www.debian.org" target="_blank">debian.org</a> - "the" isletim sistemi</li>
+        </ul>
+    </div>
+
+    <div class="contact-form">
+        <h2>send_message.sh</h2>
+        <p class="command">$ ./contact_form --interactive</p>
+        <form>
+            <div class="form-group">
+                <label for="name">your_name:</label>
+                <input type="text" id="name" name="name" placeholder="anonymous" required>
+            </div>
+            <div class="form-group">
+                <label for="email">email_addr:</label>
+                <input type="email" id="email" name="email" placeholder="user@domain.tld" required>
+            </div>
+            <div class="form-group">
+                <label for="message">message_body:</label>
+                <textarea id="message" name="message" rows="6" placeholder="mesajinizi buraya yazin..." required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">./send</button>
+        </form>
+    </div>
+
+    <div class="ascii-separator">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    </div>
+
+    <div class="footer">
+        <p>2025 - tutku ve merak ile uretildi</p>
+        <p>bu siteyi <a href="https://www.quora.com/Why-is-JavaScript-so-awful">javascr*pt kullanmadan</a>, <a href="https://www.linkedin.com/pulse/why-i-got-rid-cookies-when-developing-my-website-how-thomas-huguenel/">cookie baglamadan</a>, ve <a href="https://www.eff.org/issues/do-not-track">sizi gizlice izlemeyecek sekilde</a> yazdim.</p> <br>
+    </div>
+
+    <div class="status-line">
+        ~/mvarr.github.io/index.html [+] | UTF-8 | 100% | Ln 1, Col 1 | <span class="blink">█</span>
+    </div>
+
+    <script>
+        const USERNAME = 'mvarr';
+        
+        async function loadGistPosts() {
+            try {
+                const response = await fetch(`https://api.github.com/users/${mvarr}/gists`);
+                const gists = await response.json();
+                
+                const blogPosts = gists.filter(gist => 
+                    gist.description && gist.description.includes('[BLOG]')
+                ).slice(0, 5);
+                
+                const gistContainer = document.getElementById('gist-posts');
+                
+                if (blogPosts.length === 0) {
+                    gistContainer.innerHTML = '<div class="error">blog postlarina erisilemedi. statik metin kullaniliyor...</div>';
+                    document.getElementById('static-posts').style.display = 'block';
+                    return;
+                }
+                
+                let postsHtml = '';
+                
+                for (const gist of blogPosts) {
+                    const title = gist.description.replace('[BLOG]', '').trim();
+                    const date = new Date(gist.created_at).toLocaleString('tr-TR');
+                    
+                    const fileKey = Object.keys(gist.files)[0];
+                    const fileContent = gist.files[fileKey];
+                    
+                    let preview = '';
+                    if (fileContent.truncated) {
+                        try {
+                            const rawResponse = await fetch(fileContent.raw_url);
+                            const rawContent = await rawResponse.text();
+                            preview = rawContent.substring(0, 300) + '...';
+                        } catch (e) {
+                            preview = 'onizlemeye erisilemedi...';
+                        }
+                    } else {
+                        preview = fileContent.content.substring(0, 300) + '...';
+                    }
+                    
+                    const tags = extractTags(fileContent.content || preview);
+                    
+                    postsHtml += `
+                        <div class="blog-post">
+                            <h3>${title}</h3>
+                            <div class="blog-meta">${date} | <a href="${gist.html_url}" target="_blank" class="gist-link">view on gist</a></div>
+                            <div class="gist-content">${preview}</div>
+                            <div class="gist-embed">
+                                <a href="${gist.html_url}" target="_blank" class="gist-link">→ Read full post on GitHub Gist</a>
+                            </div>
+                            ${tags}
+                        </div>
+                    `;
+                }
+                
+                gistContainer.innerHTML = postsHtml;
+                
+            } catch (error) {
+                console.error("gist'ler yuklenirken bir hatayla karsilasildi:", error);
+                document.getElementById('gist-posts').innerHTML = '<div class="error">blog postlarina erisilemedi. statik metin kullaniliyor...</div>';
+                document.getElementById('static-posts').style.display = 'block';
+            }
+        }
+        
+        function extractTags(content) {
+            const tagRegex = /#(\w+)/g;
+            const matches = content.match(tagRegex);
+            
+            if (matches) {
+                const uniqueTags = [...new Set(matches)];
+                return `<div class="tags">${uniqueTags.map(tag => `<span class="tag">${tag.substring(1)}</span>`).join('')}</div>`;
+            }
+            
+            return '';
+        }
+
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const output = document.createElement('div');
+            output.className = 'output';
+            output.innerHTML = '<br>mesajiniz basariyla iletildi!<br>$ _';
+            this.appendChild(output);
+            this.reset();
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && (e.key === 'c' || e.key === 'C')) {
+                console.log('^C');
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadGistPosts();
+        });
+    </script>
+</body>
 </html>
