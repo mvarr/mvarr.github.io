@@ -512,108 +512,70 @@
     </div>
 
     <script>
-        const USERNAME = 'mvarr';
-        
-        async function loadGistPosts() {
-            try {
-                const response = await fetch(`https://api.github.com/users/${USERNAME}/gists`);
-                if (!response.ok) throw new Error("HTTP " + response.status);
-                const gists = await response.json();
-                
-                // [BLOG] filtresi ve slice limiti kaldırıldı
-                const allGists = gists;
-                
-                const gistContainer = document.getElementById('gist-posts');
-                
-                if (allGists.length === 0) {
-                    // Hata mesajı güncellendi
-                    gistContainer.innerHTML = '<div class="error">Gist bulunamadi. Statik metin kullaniliyor...</div>';
-                    document.getElementById('static-posts').style.display = 'block';
-                    return;
-                }
-                
-                let postsHtml = '';
-                
-                // Döngü değişkeni güncellendi
-                for (const gist of allGists) {
-                    // Başlık mantığı, 'description' null olabileceği için güvenli hale getirildi
-                    const title = (gist.description || 'Başlıksız Gist').replace('[BLOG]', '').trim();
-                    const date = new Date(gist.created_at).toLocaleString('tr-TR');
-                    
-                    const fileKey = Object.keys(gist.files)[0];
-                    const fileContent = gist.files[fileKey];
-                    
-                    let preview = '';
-                    let fullContent = ''; // Tam içerik için değişken
-                    
-                    if (fileContent.truncated) {
-                        try {
-                            const rawResponse = await fetch(fileContent.raw_url);
-                            fullContent = await rawResponse.text(); // Tam içerik atandı
-                            preview = fullContent.substring(0, 300) + '...';
-                        } catch {
-                            preview = 'onizlemeye erisilemedi...';
-                            fullContent = '';
-                        }
-                    } else {
-                        fullContent = fileContent.content || ''; // Tam içerik atandı
-                        preview = fullContent.substring(0, 300) + '...';
-                    }
-                    
-                    // Etiketler her zaman tam içerikten ayıklandı
-                    const tags = extractTags(fullContent);
-                    
-                    postsHtml += `
-                        <div class="blog-post">
-                            <h3>${title}</h3>
-                            <div class="blog-meta">${date} | <a href="${gist.html_url}" target="_blank" class="gist-link">view on gist</a></div>
-                            <div class="gist-content">${preview}</div>
-                            <div class="gist-embed">
-                              <a href="${gist.html_url}" target="_blank" class="gist-link">→ Read full post on GitHub Gist</a>
-                            </div>
-                            ${tags}
-                        </div>
-                    `;
-                }
-                
-                gistContainer.innerHTML = postsHtml;
-                
-            } catch (error) {
-                console.error("gist'ler yuklenirken bir hatayla karsilasildi:", error);
-                // Hata mesajı güncellendi
-                document.getElementById('gist-posts').innerHTML = '<div class="error">Gist\'lere erisilemedi. Statik metin kullaniliyor...</div>';
+        const USERNAME = 'mvarr';
+       
+        async function loadGistPosts() {
+            try {
+                const response = await fetch(`https://api.github.com/users/${USERNAME}/gists`);
+                if (!response.ok) throw new Error("HTTP " + response.status);
+                const gists = await response.json();
+               
+                const allGists = gists;
+               
+                const gistContainer = document.getElementById('gist-posts');
+               
+                if (allGists.length === 0) {
+                    gistContainer.innerHTML = '<div class="error">Gist bulunamadi. Statik metin kullaniliyor...</div>';
+                    document.getElementById('static-posts').style.display = 'block';
+                    return;
+                }
+               
+                let postsHtml = '';
+               
+                for (const gist of allGists) {
+                    const title = (gist.description || 'Başlıksız Gist').replace('[BLOG]', '').trim();
+                    const date = new Date(gist.created_at).toLocaleString('tr-TR');
+                   
+                   
+                    postsHtml += `
+                        <div class="blog-post">
+                            <h3>${title}</h3>
+                            <div class="blog-meta">${date} | <a href="${gist.html_url}" target="_blank" class="gist-link">view on gist</a></div>
+                            <div class="gist-embed">
+                                <a href="${gist.html_url}" target="_blank" class="gist-link">→ Read full post on GitHub Gist</a>
+                            </div>
+                      m_   </div>
+                    `;
+                }
+               
+                gistContainer.innerHTML = postsHtml;
+                
+            } catch (error) {
+                console.error("gist'ler yuklenirken bir hatayla karsilasildi:", error);
+                document.getElementById('gist-posts').innerHTML = '<div class="error">Gist\'lere erisilemedi. Statik metin kullaniliyor...</div>';
                 document.getElementById('static-posts').style.display = 'block';
-            }
-        }
-        
-        function extractTags(content) {
-            const tagRegex = /#(\w+)/g;
-            const matches = content.match(tagRegex);
-            if (matches) {
-                const uniqueTags = [...new Set(matches)];
-                return `<div class="tags">${uniqueTags.map(tag => `<span class="tag">${tag.substring(1)}</span>`).join('')}</div>`;
-            }
-            return '';
-        }
+            }
+        }
+       
     
-        document.querySelector('form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const output = document.createElement('div');
-            output.className = 'output';
-            output.innerHTML = '<br>mesajiniz basariyla iletildi!<br>$ _';
-            this.appendChild(output);
-            this.reset();
-        });
-    
-        document.addEventListener('keydown', function(e) {
-            if (e.ctrlKey && (e.key === 'c' || e.key === 'C')) {
-                console.log('^C');
-            }
-        });
-    
-        document.addEventListener('DOMContentLoaded', function() {
-            loadGistPosts();
-        });
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const output = document.createElement('div');
+            output.className = 'output';
+            output.innerHTML = '<br>mesajiniz basariyla iletildi!<br>$ _';
+            this.appendChild(output);
+            this.reset();
+        });
+     
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && (e.key === 'c' || e.key === 'C')) {
+                console.log('^C');
+            }
+        });
+     
+        document.addEventListener('DOMContentLoaded', function() {
+            loadGistPosts();
+        });
     </script>
 </body>
 </html>
