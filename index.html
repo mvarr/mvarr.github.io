@@ -516,7 +516,8 @@
         
         async function loadGistPosts() {
             try {
-                const response = await fetch(`https://api.github.com/users/${mvarr}/gists`);
+                const response = await fetch(`https://api.github.com/users/${USERNAME}/gists`);
+                if (!response.ok) throw new Error("HTTP " + response.status);
                 const gists = await response.json();
                 
                 const blogPosts = gists.filter(gist => 
@@ -546,11 +547,11 @@
                             const rawResponse = await fetch(fileContent.raw_url);
                             const rawContent = await rawResponse.text();
                             preview = rawContent.substring(0, 300) + '...';
-                        } catch (e) {
+                        } catch {
                             preview = 'onizlemeye erisilemedi...';
                         }
                     } else {
-                        preview = fileContent.content.substring(0, 300) + '...';
+                        preview = (fileContent.content || '').substring(0, 300) + '...';
                     }
                     
                     const tags = extractTags(fileContent.content || preview);
@@ -580,15 +581,13 @@
         function extractTags(content) {
             const tagRegex = /#(\w+)/g;
             const matches = content.match(tagRegex);
-            
             if (matches) {
                 const uniqueTags = [...new Set(matches)];
                 return `<div class="tags">${uniqueTags.map(tag => `<span class="tag">${tag.substring(1)}</span>`).join('')}</div>`;
             }
-            
             return '';
         }
-
+    
         document.querySelector('form').addEventListener('submit', function(e) {
             e.preventDefault();
             const output = document.createElement('div');
@@ -597,13 +596,13 @@
             this.appendChild(output);
             this.reset();
         });
-
+    
         document.addEventListener('keydown', function(e) {
             if (e.ctrlKey && (e.key === 'c' || e.key === 'C')) {
                 console.log('^C');
             }
         });
-
+    
         document.addEventListener('DOMContentLoaded', function() {
             loadGistPosts();
         });
